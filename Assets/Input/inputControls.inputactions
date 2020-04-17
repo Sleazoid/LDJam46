@@ -1,0 +1,33 @@
+{
+    "name": "inputControls",
+    "maps": [
+        {
+            "name": "Gamepad",
+            "id": "5d42f52d-e57d-4e44-8cde-4e2ec9afa0b7",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "0f4bd7bb-f430-43c6-9053-ca2b8a32e548",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "34aaf5b1-4fc4-42f0-b292-631e404bc013",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
