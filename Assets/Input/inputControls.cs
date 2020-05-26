@@ -25,6 +25,38 @@ public class @InputControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""2038bd8a-9856-4c12-9d9e-4013e3bc6165"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3aba1f5-2444-4cd9-bced-262d257084ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PrepareAim"",
+                    ""type"": ""Button"",
+                    ""id"": ""731d3bba-bc51-405e-962b-4dd55fe91698"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ClimbBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""0fbb53d2-5b9c-48cf-92db-2d9dd20b3a29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -38,6 +70,50 @@ public class @InputControls : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5e3006e-ff5e-4c1e-ab1e-2ca3cf8aedd8"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b91cecbe-a936-4d1f-b1dd-7e2f09ec6971"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c367099b-5160-46d6-8bd0-4c0b5168a574"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrepareAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bcf2334-9387-4573-804b-3edacdc99153"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ClimbBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -47,6 +123,10 @@ public class @InputControls : IInputActionCollection, IDisposable
         // Gamepad
         m_Gamepad = asset.FindActionMap("Gamepad", throwIfNotFound: true);
         m_Gamepad_Jump = m_Gamepad.FindAction("Jump", throwIfNotFound: true);
+        m_Gamepad_LeftStick = m_Gamepad.FindAction("LeftStick", throwIfNotFound: true);
+        m_Gamepad_Shoot = m_Gamepad.FindAction("Shoot", throwIfNotFound: true);
+        m_Gamepad_PrepareAim = m_Gamepad.FindAction("PrepareAim", throwIfNotFound: true);
+        m_Gamepad_ClimbBtn = m_Gamepad.FindAction("ClimbBtn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -97,11 +177,19 @@ public class @InputControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Gamepad;
     private IGamepadActions m_GamepadActionsCallbackInterface;
     private readonly InputAction m_Gamepad_Jump;
+    private readonly InputAction m_Gamepad_LeftStick;
+    private readonly InputAction m_Gamepad_Shoot;
+    private readonly InputAction m_Gamepad_PrepareAim;
+    private readonly InputAction m_Gamepad_ClimbBtn;
     public struct GamepadActions
     {
         private @InputControls m_Wrapper;
         public GamepadActions(@InputControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_Gamepad_Jump;
+        public InputAction @LeftStick => m_Wrapper.m_Gamepad_LeftStick;
+        public InputAction @Shoot => m_Wrapper.m_Gamepad_Shoot;
+        public InputAction @PrepareAim => m_Wrapper.m_Gamepad_PrepareAim;
+        public InputAction @ClimbBtn => m_Wrapper.m_Gamepad_ClimbBtn;
         public InputActionMap Get() { return m_Wrapper.m_Gamepad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -114,6 +202,18 @@ public class @InputControls : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnJump;
+                @LeftStick.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnLeftStick;
+                @LeftStick.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnLeftStick;
+                @LeftStick.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnLeftStick;
+                @Shoot.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnShoot;
+                @PrepareAim.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPrepareAim;
+                @PrepareAim.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPrepareAim;
+                @PrepareAim.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPrepareAim;
+                @ClimbBtn.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnClimbBtn;
+                @ClimbBtn.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnClimbBtn;
+                @ClimbBtn.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnClimbBtn;
             }
             m_Wrapper.m_GamepadActionsCallbackInterface = instance;
             if (instance != null)
@@ -121,6 +221,18 @@ public class @InputControls : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @LeftStick.started += instance.OnLeftStick;
+                @LeftStick.performed += instance.OnLeftStick;
+                @LeftStick.canceled += instance.OnLeftStick;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @PrepareAim.started += instance.OnPrepareAim;
+                @PrepareAim.performed += instance.OnPrepareAim;
+                @PrepareAim.canceled += instance.OnPrepareAim;
+                @ClimbBtn.started += instance.OnClimbBtn;
+                @ClimbBtn.performed += instance.OnClimbBtn;
+                @ClimbBtn.canceled += instance.OnClimbBtn;
             }
         }
     }
@@ -128,5 +240,9 @@ public class @InputControls : IInputActionCollection, IDisposable
     public interface IGamepadActions
     {
         void OnJump(InputAction.CallbackContext context);
+        void OnLeftStick(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnPrepareAim(InputAction.CallbackContext context);
+        void OnClimbBtn(InputAction.CallbackContext context);
     }
 }
