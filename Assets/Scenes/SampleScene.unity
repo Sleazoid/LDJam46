@@ -585,6 +585,7 @@ MonoBehaviour:
   climbLayer:
     serializedVersion: 2
     m_Bits: 256
+  isClimbing: 0
   onGroundMaterial: {fileID: 6200000, guid: 7f2b4af5f41433d4ea3cebb6354a50eb, type: 2}
   onAirMaterial: {fileID: 6200000, guid: b19d32f0459f1ef46a08894a9728ca9d, type: 2}
   playerSpriteRend: {fileID: 1967689745}
@@ -1496,6 +1497,7 @@ MonoBehaviour:
   climbLayer:
     serializedVersion: 2
     m_Bits: 0
+  isClimbing: 0
   onGroundMaterial: {fileID: 0}
   onAirMaterial: {fileID: 0}
   playerSpriteRend: {fileID: 0}
@@ -3535,6 +3537,7 @@ MonoBehaviour:
   climbLayer:
     serializedVersion: 2
     m_Bits: 0
+  isClimbing: 0
   onGroundMaterial: {fileID: 0}
   onAirMaterial: {fileID: 0}
   playerSpriteRend: {fileID: 0}
