@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -32,28 +31,27 @@ public class PlayerMove : MonoBehaviour
     bool landedAfterJump = true;
     [SerializeField]
     private Transform groundCheck;
-    //Climb variables
-    private bool climbBtnPressed = false;
-    [SerializeField]
-    private Transform climbCheck;
-    [SerializeField]
-    private float climbColDistance;
-    [SerializeField]
-    private LayerMask climbLayer;
-    public bool isClimbing = false;
-    private float defaultGravityScale;
     bool canMove = true;
     [SerializeField]
-    private PhysicsMaterial2D onGroundMaterial;
-    [SerializeField]
-    private PhysicsMaterial2D onAirMaterial;
-    [SerializeField]
-    private SpriteRenderer playerSpriteRend;
-
-
+    private Transform bowTransform;
     private BowAim bowAim;
     public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
     public bool CanMove { get => canMove; set => canMove = value; }
+    public bool Rolling { get => rolling; set => rolling = value; }
+
+    // roll variables 
+    [SerializeField]
+    private float rollForce = 2f;
+    [SerializeField]
+    private float rollJumpForce = 2f;
+    [SerializeField]
+    private float rollAngle = 45f;
+    private bool rolling = false;
+    [SerializeField]
+    private float rollDeadTime = 0.5f;
+    private bool rollIsDead = false;
+    DashTrail dashTrail;
+
 
     private void Awake()
     {
@@ -62,8 +60,7 @@ public class PlayerMove : MonoBehaviour
         inputAction.Gamepad.LeftStick.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         inputAction.Gamepad.Jump.performed += ctx => AddJumpPressForce();
         inputAction.Gamepad.Jump.canceled += ctx => JumpReleased();
-        inputAction.Gamepad.ClimbBtn.performed += ctx => ClimbActivated();
-        inputAction.Gamepad.ClimbBtn.canceled += ctx => ClimbCancelled();
+        inputAction.Gamepad.Roll.performed += ctx => RollDodge();
         Debug.Log("awake");
     }
 
@@ -72,8 +69,8 @@ public class PlayerMove : MonoBehaviour
     {
         //anim.GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        defaultGravityScale = rb.gravityScale;
         bowAim = GetComponent<BowAim>();
+        dashTrail = GetComponentInChildren<DashTrail>();
     }
 
     private void Update()
@@ -81,7 +78,7 @@ public class PlayerMove : MonoBehaviour
         yMove = Input.GetAxis("Vertical");
         xMove = Input.GetAxis("Horizontal");
 
-        if (!isClimbing && (xMove > 0.1f || xMove < -0.1f))
+        if (/*!CanMove &&*/ (xMove > 0.1f || xMove < -0.1f))
         {
             if (xMove < 0f)
             {
@@ -100,130 +97,101 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    private void TryToClimb()
+    private void SwapFacing()
     {
-        if (!isClimbing)
+        if (facingRight)
         {
-            Debug.Log("aaaa00");
-            RaycastHit2D hit = Physics2D.Raycast((Vector2)climbCheck.position, transform.right, climbColDistance, climbLayer);
-            if (hit)
-            {
-                float distanceToWallEdge = hit.point.x - climbCheck.position.x;
-                this.transform.position = new Vector2(this.transform.position.x + distanceToWallEdge, this.transform.position.y);
-                playerSpriteRend.flipX = true;
-                isClimbing = true;
-                anim.SetBool("IsClimbing", isClimbing);
-                Debug.Log("safds");
-                rb.velocity = new Vector2(0, 0);
-                rb.gravityScale = 0f;
-            }
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            facingRight = false;
+            bowAim.FacingRight = facingRight;
         }
-
-    }
-    private void ClimbActivated()
-    {
-        climbBtnPressed = true;
-    }
-    private void ClimbCancelled()
-    {
-        climbBtnPressed = false;
-        if (isClimbing)
+        else if (!facingRight)
         {
-            Debug.Log("nooh");
-            playerSpriteRend.flipX = false;
-            isClimbing = false;
-            anim.SetBool("IsClimbing", isClimbing);
-            anim.SetBool("Falling", true);
-            rb.gravityScale = defaultGravityScale;
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            facingRight = true;
+            bowAim.FacingRight = facingRight;
         }
+    }
+    public void RollEnded()
+    {
+        dashTrail.CancelInvoke("SpawnTrailPart");
+        rolling = false;
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        rollIsDead = true;
+        Invoke("EnableRollAction", rollDeadTime);
+    }
+    private void EnableRollAction()
+    {
+        rollIsDead = false;
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (climbBtnPressed)
-        {
-            TryToClimb();
-        }
-        else
-        {
-            anim.SetFloat("RunSpeed", rb.velocity.x);
-            if (rb.velocity.y < 0 && rb.drag != 1)// && !isGrounded)
-            {
-                Debug.Log("AAGRG");
-                if (!anim.GetBool("Falling"))
-                {
-                    anim.SetBool("Falling", true);
-                }
-                
-                //anim.SetBool("JumpUp", false);
-                rb.drag = 1;
-            }
-            else if (rb.velocity.y >= 0 && rb.drag != 0)
-            {
-                rb.drag = 0;
-            }
-        }
-
+        anim.SetFloat("RunSpeed", rb.velocity.x);
 
         moveDir = new Vector2(xMove, yMove);
         moveDir.Normalize();
-        // Debug.Log(moveDir);
-        if (!isClimbing && (xMove > 0.1f || xMove < -0.1f))// && isGrounded)
+
+        if (CanMove && (xMove > 0.1f || xMove < -0.1f) && !rolling)// && isGrounded)
         {
             Move();
         }
 
-
-        //if (!isGrounded && rb.velocity.y < 0)
+        if (rb.velocity.y < 0 && rb.drag != 1)// && !isGrounded)
         {
-            if (!anim.GetBool("Falling") && Physics2D.Raycast(groundCheck.position, -this.transform.up, 0.5f) && !IsGrounded)
-            {
-                Debug.Log("disableFalling");
-                DisableFallingAnim();
-            }
-            if (Physics2D.Raycast(groundCheck.position, -this.transform.up, 0.1f))
-            {
-                rb.sharedMaterial = onGroundMaterial;
-                isGrounded = true;
-
-                DisableFallingAnim();
-                anim.Play("aloy_idle");
-            }
-            else
-            {
-                rb.sharedMaterial = onAirMaterial;
-                isGrounded = false;
-            }
-
+            anim.SetBool("Falling", true);
+            rb.drag = 1;
         }
+        else if (rb.velocity.y >= 0 && rb.drag != 0)
+        {
+            rb.drag = 0;
+        }
+
+        if (Physics2D.Raycast(groundCheck.position, -this.transform.up, 0.1f))
+        {
+            isGrounded = true;
+            DisableFallingAnim();
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+    }
+    private void RollDodge()
+    {
+        if (!rollIsDead && !rolling && IsGrounded)
+        {
+            rolling = true;
+            anim.SetBool("Roll", true);
+            Vector2 dirForce = this.transform.right * rollForce;// * moveDir ;
+            if (!facingRight)
+            {
+                dirForce *= -1;
+            }
+            Vector2 jumpForce = this.transform.up * rollJumpForce;
+            rb.AddForce(jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(dirForce, ForceMode2D.Impulse);
+            dashTrail.InvokeRepeating("SpawnTrailPart", 0, 0.03f);
+            dashTrail.FlipTrail();
+        }
+
     }
     public void DisableFallingAnim()
     {
+        Debug.Log("aaaaa");
         anim.SetBool("Falling", false);
-        //   anim.SetBool("JumpUp", false);
+
     }
     private void AddJumpPressForce()
     {
-
-        if (isGrounded)
+        if (isGrounded && !anim.GetBool("Roll"))
         {
             anim.Play("aloyJump");
-            //anim.SetBool("JumpUp", true);
             InvokeRepeating("JumpCheckInterval", 0f, jumpCheckInterval);
 
         }
-        else if (isClimbing)
-        {
-            Debug.Log("sf");
-            //playerSpriteRend.flipX = false;
-            anim.SetBool("JumpUp", true);
-            ClimbCancelled();
-            //isClimbing = false;
-            //anim.SetBool("IsClimbing", isClimbing);
-            //rb.gravityScale = defaultGravityScale;
-            InvokeRepeating("JumpCheckInterval", 0f, jumpCheckInterval);
-        }
-        //  isGrounded = false;
+
     }
     public void SetOnKneesFalse()
     {
@@ -239,20 +207,17 @@ public class PlayerMove : MonoBehaviour
             Vector2 dirForce = this.transform.up * jumpCheckForce;// * moveDir ;
             rb.AddForce(dirForce, ForceMode2D.Impulse);
             curJumpInterval++;
-            //Debug.Log(curJumpInterval);
+            Debug.Log(curJumpInterval);
         }
 
-        //  yield return null;
     }
     private void JumpReleased()
     {
-
         CancelInvoke("JumpCheckInterval");
         curJumpInterval = 0;
     }
     private void Move()
     {
-        //Debug.Log(moveDir);
         rb.velocity = new Vector2(xMove * RunSpeed, rb.velocity.y);
     }
     private void OnEnable()
@@ -263,19 +228,5 @@ public class PlayerMove : MonoBehaviour
     {
         inputAction.Disable();
     }
-    //private void SwapFacing()
-    //{
-    //    if (facingRight)
-    //    {
-    //        transform.localScale = new Vector3(-1f, 1f, 1f); //bowTransform.localScale = new Vector3(-1f, 1f, 1f);
-    //        facingRight = false;
-    //        bowAim.FacingRight = facingRight;
-    //    }
-    //    else if (!facingRight)
-    //    {
-    //        transform.localScale = new Vector3(1f, 1f, 1f);// bowTransform.localScale = new Vector3(1f, 1f, 1f);
-    //        facingRight = true;
-    //        bowAim.FacingRight = facingRight;
-    //    }
-    //}
+
 }

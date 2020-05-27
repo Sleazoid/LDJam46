@@ -12,6 +12,11 @@ public class ArrowScript : MonoBehaviour
     float shootForce;
     bool move = false;
     float angle;
+    [SerializeField]
+    private LayerMask watcherLayer;
+    [SerializeField]
+    private LayerMask hawkLayer;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -54,5 +59,13 @@ public class ArrowScript : MonoBehaviour
         {
             rb.AddForce(-this.transform.right * f, ForceMode2D.Impulse);
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag.Equals("Watcher"))
+        {
+            Debug.Log("asaaaaa");
+        }
+        //if(collision.gameObject.tag.eq)
     }
 }

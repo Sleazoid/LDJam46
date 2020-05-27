@@ -33,6 +33,8 @@ public class BowAim : MonoBehaviour
     [SerializeField]
     float maxfireBtnValue = 500f;
 
+
+
     [SerializeField]
     private float fireStrength;
     [SerializeField]
@@ -72,6 +74,7 @@ public class BowAim : MonoBehaviour
     {
 
     }
+
     private void CancelAim()
     {
         aiming = false;
@@ -156,7 +159,7 @@ public class BowAim : MonoBehaviour
     {
         bowAnim.SetBool("isFiring", true);
         trajectoryGO.SetActive(true);
-        Debug.Log("sdfads");
+        //Debug.Log("sdfads");
         InvokeRepeating("FireCheckInterval", 0f, fireCheckInterval);
     }
     void Aim()
@@ -167,6 +170,7 @@ public class BowAim : MonoBehaviour
         //Vector3 fireDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
         //Vector3 aimDir=new Vector3(0,0)
         float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
+       // Debug.Log(angle);
         if(FacingRight)
         {
             bowGO.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
