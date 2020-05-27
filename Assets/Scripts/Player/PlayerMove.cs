@@ -52,7 +52,7 @@ public class PlayerMove : MonoBehaviour
     private bool rollIsDead = false;
     DashTrail dashTrail;
 
-
+    PlayerHealth playerHealth;
     private void Awake()
     {
         inputAction = new InputControls();
@@ -71,6 +71,7 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bowAim = GetComponent<BowAim>();
         dashTrail = GetComponentInChildren<DashTrail>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void Update()
@@ -97,21 +98,6 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    private void SwapFacing()
-    {
-        if (facingRight)
-        {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            facingRight = false;
-            bowAim.FacingRight = facingRight;
-        }
-        else if (!facingRight)
-        {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-            facingRight = true;
-            bowAim.FacingRight = facingRight;
-        }
-    }
     public void RollEnded()
     {
         dashTrail.CancelInvoke("SpawnTrailPart");
@@ -119,6 +105,7 @@ public class PlayerMove : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
         rollIsDead = true;
         Invoke("EnableRollAction", rollDeadTime);
+        playerHealth.IsDodging = false;
     }
     private void EnableRollAction()
     {
@@ -163,6 +150,7 @@ public class PlayerMove : MonoBehaviour
         if (!rollIsDead && !rolling && IsGrounded)
         {
             rolling = true;
+            playerHealth.IsDodging = true;
             anim.SetBool("Roll", true);
             Vector2 dirForce = this.transform.right * rollForce;// * moveDir ;
             if (!facingRight)

@@ -84,7 +84,7 @@ public class ArrowScript : MonoBehaviour
         if (collision.gameObject.tag.Equals("Watcher"))
         {
             collision.gameObject.GetComponent<WatcherEnemy>().ArrowHit();
-            Debug.Log("asaaaaa");
+           // Debug.Log("asaaaaa");
         }
         //if(collision.gameObject.tag.eq)
     }
