@@ -16,7 +16,7 @@ public class ArrowScript : MonoBehaviour
     private LayerMask watcherLayer;
     [SerializeField]
     private LayerMask hawkLayer;
-
+    private bool hitSomething = false;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,7 +42,21 @@ public class ArrowScript : MonoBehaviour
             //        this.transform.Translate(Vector2.right * shootForce/1000 * Time.deltaTime);
             //    }
         }
-
+        if(hitSomething)
+        {
+           // Debug.Log(rb.velocity);
+            if(rb.velocity.magnitude.Equals(0))
+            {
+              
+                Destroy(this.gameObject);
+            }
+        }
+        else if(transform.position.y<-50)
+        {
+          
+            Destroy(this.gameObject);
+        }
+       
     }
 
     public void SetPath(Vector3[] points, float force, bool facingRight)
@@ -51,7 +65,7 @@ public class ArrowScript : MonoBehaviour
         linePoints = points;
         move = true;
         float f = force / 14;
-        if(facingRight)
+        if (facingRight)
         {
             rb.AddForce(this.transform.right * f, ForceMode2D.Impulse);
         }
@@ -62,8 +76,14 @@ public class ArrowScript : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag.Equals("Watcher"))
+        hitSomething = true;
+        if (collision.gameObject.tag.Equals("Watcher"))
         {
+            rb.velocity = new Vector2(0, 0);
+        }
+        if (collision.gameObject.tag.Equals("Watcher"))
+        {
+            collision.gameObject.GetComponent<WatcherEnemy>().ArrowHit();
             Debug.Log("asaaaaa");
         }
         //if(collision.gameObject.tag.eq)

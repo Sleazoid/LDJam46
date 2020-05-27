@@ -18,10 +18,10 @@ TagManager:
   - 
   - 
   - ClimbLayer
-  - 
-  - 
-  - 
-  - 
+  - Arrow
+  - Player
+  - EnemyGroundCol
+  - Watcher
   - 
   - 
   - 

@@ -179,8 +179,8 @@ public class PlayerMove : MonoBehaviour
     }
     public void DisableFallingAnim()
     {
-        Debug.Log("aaaaa");
-        anim.SetBool("Falling", false);
+        if(anim.GetBool("Falling"))
+            anim.SetBool("Falling", false);
 
     }
     private void AddJumpPressForce()

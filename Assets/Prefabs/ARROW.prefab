@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 729810455568683143}
   - component: {fileID: 2010328877}
   - component: {fileID: 3769236815171053749}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ARROW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,6 +119,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePoints: []
+  watcherLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  hawkLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &2010328877
 MonoBehaviour:
   m_ObjectHideFlags: 0

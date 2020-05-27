@@ -1,55 +1,49 @@
 fileFormatVersion: 2
-guid: feeb0739e38ed604383b28b3cd8ce31d
+guid: 5ef3277313aea0e4e863c7064f02389f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7236168042618917806
-    second: WatcheRun_0
+      213: 6319511350118711970
+    second: WatcheIsDead_0
   - first:
-      213: -6367048346810138761
-    second: WatcheRun_1
+      213: 2707379436441851711
+    second: WatcheIsDead_1
   - first:
-      213: -3613553431710827806
-    second: WatcheRun_2
+      213: 6063052531369426501
+    second: WatcheIsDead_2
   - first:
-      213: 960096815036765022
-    second: WatcheRun_3
+      213: -4886294590959607736
+    second: WatcheIsDead_3
   - first:
-      213: -720283481841418393
-    second: WatcheRun_4
+      213: -3636362345643911035
+    second: WatcheIsDead_4
   - first:
-      213: -5722622769635313477
-    second: WatcheRun_5
+      213: -7435613302790373181
+    second: WatcheIsDead_5
   - first:
-      213: 2505121404874507875
-    second: WatcheRun_6
+      213: -975489095937338090
+    second: WatcheIsDead_6
   - first:
-      213: 3529724657977209825
-    second: WatcheRun_7
+      213: 5314064236391645562
+    second: WatcheIsDead_0
   - first:
-      213: 5523372832426115364
-    second: WatcheRun_0
+      213: 2722543733783363797
+    second: WatcheIsDead_1
   - first:
-      213: -227518390718633610
-    second: WatcheRun_1
+      213: 6138839467485674688
+    second: WatcheIsDead_2
   - first:
-      213: -357040233541401835
-    second: WatcheRun_2
+      213: -7360678526920080902
+    second: WatcheIsDead_3
   - first:
-      213: 1176657214443346225
-    second: WatcheRun_3
+      213: -8528604522394319524
+    second: WatcheIsDead_4
   - first:
-      213: 5052138089160408367
-    second: WatcheRun_4
+      213: 4933993376006270146
+    second: WatcheIsDead_5
   - first:
-      213: 1068805105155397297
-    second: WatcheRun_5
-  - first:
-      213: -7306887895560833223
-    second: WatcheRun_6
-  - first:
-      213: -4664859454217159102
-    second: WatcheRun_7
+      213: -6935426732565218341
+    second: WatcheIsDead_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -183,169 +177,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WatcheRun_0
+      name: WatcheIsDead_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 62
-        height: 40
-      alignment: 9
-      pivot: {x: 0.5000001, y: 0.02358836}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4214dc6b356f6ac40800000000000000
-      internalID: 5523372832426115364
+      spriteID: a714bb394495fb940800000000000000
+      internalID: 5314064236391645562
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WatcheRun_1
+      name: WatcheIsDead_1
       rect:
         serializedVersion: 2
         x: 62
         y: 0
         width: 62
-        height: 40
-      alignment: 9
-      pivot: {x: 0.5, y: 0.044817854}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 679e855aa31b7dcf0800000000000000
-      internalID: -227518390718633610
+      spriteID: 5d08f99e91b68c520800000000000000
+      internalID: 2722543733783363797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WatcheRun_2
+      name: WatcheIsDead_2
       rect:
         serializedVersion: 2
         x: 124
         y: 0
         width: 62
-        height: 40
-      alignment: 9
-      pivot: {x: 0.4984783, y: 0.02358836}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5130e3d9cc98b0bf0800000000000000
-      internalID: -357040233541401835
+      spriteID: 0ccb1a088f9813550800000000000000
+      internalID: 6138839467485674688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WatcheRun_3
+      name: WatcheIsDead_3
       rect:
         serializedVersion: 2
         x: 186
         y: 0
         width: 62
-        height: 40
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 139db499083545010800000000000000
-      internalID: 1176657214443346225
+      spriteID: af14519d0ed99d990800000000000000
+      internalID: -7360678526920080902
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WatcheRun_4
+      name: WatcheIsDead_4
       rect:
         serializedVersion: 2
         x: 248
         y: 0
         width: 62
-        height: 40
-      alignment: 9
-      pivot: {x: 0.5, y: 0.02358836}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2d70a023dccc1640800000000000000
-      internalID: 5052138089160408367
+      spriteID: c5585e49f5f44a980800000000000000
+      internalID: -8528604522394319524
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WatcheRun_5
+      name: WatcheIsDead_5
       rect:
         serializedVersion: 2
         x: 310
         y: 0
         width: 62
-        height: 40
-      alignment: 9
-      pivot: {x: 0.50152194, y: 0.04717668}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b659e2949825de00800000000000000
-      internalID: 1068805105155397297
+      spriteID: 2ccebf485d0197440800000000000000
+      internalID: 4933993376006270146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WatcheRun_6
+      name: WatcheIsDead_6
       rect:
         serializedVersion: 2
         x: 372
         y: 0
         width: 62
-        height: 40
-      alignment: 9
-      pivot: {x: 0.5, y: 0.025947193}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 937be7b2c28b89a90800000000000000
-      internalID: -7306887895560833223
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WatcheRun_7
-      rect:
-        serializedVersion: 2
-        x: 434
-        y: 0
-        width: 62
-        height: 40
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1e33ba900e91cf030800000000000000
-      internalID: 3529724657977209825
+      spriteID: bdbb3b7d12a60cf90800000000000000
+      internalID: -6935426732565218341
       vertices: []
       indices: 
       edges: []

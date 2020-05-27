@@ -154,6 +154,7 @@ public class BowAim : MonoBehaviour
         Vector3[] positions = new Vector3[trajectoryGO.GetComponent<LineRenderer>().positionCount];// = trajectoryGO.GetComponent<LineRenderer>().
         trajectoryGO.GetComponent<LineRenderer>().GetPositions(positions);
         newArrow.GetComponent<ArrowScript>().SetPath(positions, fireStrength, facingRight);
+       
     }
     void Shoot()
     {
