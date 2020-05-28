@@ -65,6 +65,14 @@ public class @InputControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""9eea4ac7-efb7-4a9c-aa39-54feeba0cc90"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -133,6 +141,17 @@ public class @InputControls : IInputActionCollection, IDisposable
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33838dfa-5b1c-44b5-9f07-e1f379677fc3"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -147,6 +166,7 @@ public class @InputControls : IInputActionCollection, IDisposable
         m_Gamepad_PrepareAim = m_Gamepad.FindAction("PrepareAim", throwIfNotFound: true);
         m_Gamepad_ClimbBtn = m_Gamepad.FindAction("ClimbBtn", throwIfNotFound: true);
         m_Gamepad_Roll = m_Gamepad.FindAction("Roll", throwIfNotFound: true);
+        m_Gamepad_Restart = m_Gamepad.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -202,6 +222,7 @@ public class @InputControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gamepad_PrepareAim;
     private readonly InputAction m_Gamepad_ClimbBtn;
     private readonly InputAction m_Gamepad_Roll;
+    private readonly InputAction m_Gamepad_Restart;
     public struct GamepadActions
     {
         private @InputControls m_Wrapper;
@@ -212,6 +233,7 @@ public class @InputControls : IInputActionCollection, IDisposable
         public InputAction @PrepareAim => m_Wrapper.m_Gamepad_PrepareAim;
         public InputAction @ClimbBtn => m_Wrapper.m_Gamepad_ClimbBtn;
         public InputAction @Roll => m_Wrapper.m_Gamepad_Roll;
+        public InputAction @Restart => m_Wrapper.m_Gamepad_Restart;
         public InputActionMap Get() { return m_Wrapper.m_Gamepad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -239,6 +261,9 @@ public class @InputControls : IInputActionCollection, IDisposable
                 @Roll.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnRoll;
                 @Roll.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnRoll;
                 @Roll.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnRoll;
+                @Restart.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnRestart;
             }
             m_Wrapper.m_GamepadActionsCallbackInterface = instance;
             if (instance != null)
@@ -261,6 +286,9 @@ public class @InputControls : IInputActionCollection, IDisposable
                 @Roll.started += instance.OnRoll;
                 @Roll.performed += instance.OnRoll;
                 @Roll.canceled += instance.OnRoll;
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
             }
         }
     }
@@ -273,5 +301,6 @@ public class @InputControls : IInputActionCollection, IDisposable
         void OnPrepareAim(InputAction.CallbackContext context);
         void OnClimbBtn(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

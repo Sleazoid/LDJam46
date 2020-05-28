@@ -17,6 +17,8 @@ public class ArrowScript : MonoBehaviour
     [SerializeField]
     private LayerMask hawkLayer;
     private bool hitSomething = false;
+    [SerializeField]
+    private GameObject sparklePrefab;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -84,7 +86,9 @@ public class ArrowScript : MonoBehaviour
         if (collision.gameObject.tag.Equals("Watcher"))
         {
             collision.gameObject.GetComponent<WatcherEnemy>().ArrowHit();
-           // Debug.Log("asaaaaa");
+            // Debug.Log("asaaaaa");
+            
+            GameObject sp = Instantiate(sparklePrefab, collision.contacts[0].point, Quaternion.identity);
         }
         //if(collision.gameObject.tag.eq)
     }

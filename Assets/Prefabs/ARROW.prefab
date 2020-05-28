@@ -125,6 +125,8 @@ MonoBehaviour:
   hawkLayer:
     serializedVersion: 2
     m_Bits: 0
+  sparklePrefab: {fileID: 6814350942038445912, guid: 1123124c030070440a8104dad1a4a8ef,
+    type: 3}
 --- !u!114 &2010328877
 MonoBehaviour:
   m_ObjectHideFlags: 0

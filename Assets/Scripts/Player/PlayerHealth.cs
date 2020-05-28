@@ -6,10 +6,13 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
     private int health=5;
+    private float healthPercent = 1.0f;
+    private float decreaseAmount;
     [SerializeField]
     private Animator anim;
-
+    private bool isDead = false;
     private bool isDodging = false;
+    PlayerMove playerMove;
 
     public bool IsDodging { get => isDodging; set => isDodging = value; }
 
@@ -17,6 +20,8 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         
+        decreaseAmount = 1f / 5;
+        playerMove = GetComponent<PlayerMove>();
     }
 
     public void ApplyDamage()
@@ -25,6 +30,8 @@ public class PlayerHealth : MonoBehaviour
         {
             anim.Play("aloy_DamageAnim");
             health--;
+            healthPercent -= decreaseAmount;
+            GameManager.Instance.DecreaseHealth(healthPercent);
             CheckIfDead();
         }
     
@@ -33,7 +40,11 @@ public class PlayerHealth : MonoBehaviour
     {
         if(health<1)
         {
+            isDead = true;
             Debug.Log("PlayerIsDead");
+            GameManager.Instance.PlayerIsDead();
+            playerMove.enabled = false;
+            anim.Play("Death");
         }
     }
 }
