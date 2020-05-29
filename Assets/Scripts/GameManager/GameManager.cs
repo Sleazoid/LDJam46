@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Image healthImg;
     public static GameManager Instance { get => instance; }
-
-
+    private int currentSceneIndex = 0;
+    bool alreadyLoading = false;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
         canvas.SetActive(true);
         deadTextPanel.SetActive(false);
         watchers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Watcher"));
+        alreadyLoading = false;
     }
 
     // Update is called once per frame
@@ -61,10 +62,43 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            if (SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                Application.Quit();
+            }
+            else
+            {
+                ToMainMenu();
+            }
+        }
+       
+    }
+    private void ToMainMenu()
+    {
+        if (!alreadyLoading)
+        {
+            Debug.Log("Next level wanted");
+            SceneManager.LoadScene(0);
+            alreadyLoading = true;
         }
     }
+    public void ToNextLevel(float timeWait)
+    {
+        if(!alreadyLoading)
+        {
+            Debug.Log("Next level wanted");
+            StartCoroutine("LoadLevelWithWait", timeWait);
+            alreadyLoading = true;
+        }   
+    }
+    IEnumerator LoadLevelWithWait(float val)
+    {
+        currentSceneIndex++;
+        yield return new WaitForSeconds(val);
+        SceneManager.LoadScene(currentSceneIndex);
+        yield return null;
 
+    }
     public void PlayerIsDead()
     {
         deadTextPanel.SetActive(true);

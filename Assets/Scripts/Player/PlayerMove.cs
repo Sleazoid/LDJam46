@@ -61,7 +61,7 @@ public class PlayerMove : MonoBehaviour
         inputAction.Gamepad.Jump.performed += ctx => AddJumpPressForce();
         inputAction.Gamepad.Jump.canceled += ctx => JumpReleased();
         inputAction.Gamepad.Roll.performed += ctx => RollDodge();
-        Debug.Log("awake");
+     
     }
 
     // Start is called before the first frame update

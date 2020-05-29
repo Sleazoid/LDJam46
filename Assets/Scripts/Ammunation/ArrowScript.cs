@@ -82,13 +82,16 @@ public class ArrowScript : MonoBehaviour
         if (collision.gameObject.tag.Equals("Watcher"))
         {
             rb.velocity = new Vector2(0, 0);
-        }
-        if (collision.gameObject.tag.Equals("Watcher"))
-        {
             collision.gameObject.GetComponent<WatcherEnemy>().ArrowHit();
-            // Debug.Log("asaaaaa");
-            
             GameObject sp = Instantiate(sparklePrefab, collision.contacts[0].point, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
+        if (collision.gameObject.tag.Equals("Hawk"))
+        {
+            rb.velocity = new Vector2(0, 0);
+            collision.gameObject.GetComponent<StormBirdEnemy>().ArrowHit();
+            GameObject sp = Instantiate(sparklePrefab, collision.contacts[0].point, Quaternion.identity);
+            Destroy(this.gameObject);
         }
         //if(collision.gameObject.tag.eq)
     }

@@ -77,9 +77,15 @@ public class BowAim : MonoBehaviour
 
     private void CancelAim()
     {
+        StartCoroutine("WaitTillCancelAim");
+    }
+    IEnumerator WaitTillCancelAim()
+    {
+        yield return new WaitForSeconds(0.15f);
         aiming = false;
         playerAnim.SetBool("isAiming", aiming);
         DisableBow();
+        yield return null;
     }
     private void Aiming()
     {
@@ -102,8 +108,6 @@ public class BowAim : MonoBehaviour
         if(aiming)
         {
     
-            //yMove = Input.GetAxis("Vertical");
-            //xMove = Input.GetAxis("Horizontal");
             float h = Input.GetAxis("Vertical");
             float v = Input.GetAxis("Horizontal");
             //  Debug.Log(h + " " + v);
@@ -115,10 +119,7 @@ public class BowAim : MonoBehaviour
             }
            
         }
-        //else
-        //{
-          
-        //}
+       
     }
     private void EnableBow()
     {
@@ -149,6 +150,7 @@ public class BowAim : MonoBehaviour
     }
     public void ShootArrow()
     {
+        
         fireStrength = fireBtnValue + initFireValue;
         GameObject newArrow = Instantiate(bowPrefab, this.transform.position, bowGO.transform.rotation);
         Vector3[] positions = new Vector3[trajectoryGO.GetComponent<LineRenderer>().positionCount];// = trajectoryGO.GetComponent<LineRenderer>().
@@ -163,15 +165,15 @@ public class BowAim : MonoBehaviour
         //Debug.Log("sdfads");
         InvokeRepeating("FireCheckInterval", 0f, fireCheckInterval);
     }
+    //IEnumerator EnableShooting()
+    //{
+
+    //}
     void Aim()
     {
-       // Debug.Log(movementInput);
+
         playerAnim.SetFloat("YLookValue", movementInput.y);
-        //Quaternion targetRotation = Quaternion.LookRotation(movementInput, Vector3.back);
-        //Vector3 fireDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
-        //Vector3 aimDir=new Vector3(0,0)
         float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
-       // Debug.Log(angle);
         if(FacingRight)
         {
             bowGO.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -182,10 +184,6 @@ public class BowAim : MonoBehaviour
         }
      
 
-        // trajectory.playerFire = 500f;
-
-        //bowGO.transform.rotation = Quaternion.Lerp(bowGO.transform.rotation, targetRotation, Time.deltaTime);
-        // bowGO.transform.rotation = Quaternion.Lerp(bowGO.transform.rotation, targetRotation, Time.deltaTime);
     }
     private void FireCheckInterval()
     {
