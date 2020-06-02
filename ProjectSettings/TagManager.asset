@@ -9,6 +9,9 @@ TagManager:
   - Watcher
   - Hawk
   - enemyBullet
+  - watcherBody
+  - groundTrap
+  - Herb
   layers:
   - Default
   - TransparentFX
@@ -25,9 +28,9 @@ TagManager:
   - Watcher
   - StormBird
   - enemyBullet
-  - 
-  - 
-  - 
+  - WatcherBody
+  - GroundTrap
+  - EdgeLayer
   - 
   - 
   - 

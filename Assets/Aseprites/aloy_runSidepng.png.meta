@@ -85,7 +85,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -97,7 +97,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -109,7 +109,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Windows Store Apps
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -121,7 +121,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: iPhone
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -133,7 +133,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -145,7 +145,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -162,12 +162,12 @@ TextureImporter:
       name: aloy_runSidepng_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 13
+        x: 1
+        y: 4
+        width: 15
         height: 22
       alignment: 9
-      pivot: {x: 0.5078247, y: 0.04623709}
+      pivot: {x: 0.5, y: 0.04623709}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -183,9 +183,9 @@ TextureImporter:
       name: aloy_runSidepng_1
       rect:
         serializedVersion: 2
-        x: 13
-        y: 0
-        width: 13
+        x: 50
+        y: 3
+        width: 15
         height: 22
       alignment: 9
       pivot: {x: 0.5, y: 0.08785041}
@@ -204,9 +204,9 @@ TextureImporter:
       name: aloy_runSidepng_2
       rect:
         serializedVersion: 2
-        x: 26
-        y: 0
-        width: 13
+        x: 99
+        y: 4
+        width: 15
         height: 22
       alignment: 9
       pivot: {x: 0.5, y: 0.04623709}
@@ -225,9 +225,9 @@ TextureImporter:
       name: aloy_runSidepng_3
       rect:
         serializedVersion: 2
-        x: 39
-        y: 0
-        width: 13
+        x: 148
+        y: 5
+        width: 15
         height: 22
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -246,12 +246,12 @@ TextureImporter:
       name: aloy_runSidepng_4
       rect:
         serializedVersion: 2
-        x: 52
-        y: 0
-        width: 13
+        x: 197
+        y: 4
+        width: 15
         height: 22
       alignment: 9
-      pivot: {x: 0.50782514, y: 0.05086079}
+      pivot: {x: 0.5, y: 0.05086079}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -267,12 +267,12 @@ TextureImporter:
       name: aloy_runSidepng_5
       rect:
         serializedVersion: 2
-        x: 65
-        y: 0
-        width: 13
+        x: 246
+        y: 3
+        width: 15
         height: 22
       alignment: 9
-      pivot: {x: 0.5000006, y: 0.08785041}
+      pivot: {x: 0.5, y: 0.08785041}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -288,12 +288,12 @@ TextureImporter:
       name: aloy_runSidepng_6
       rect:
         serializedVersion: 2
-        x: 78
-        y: 0
-        width: 13
+        x: 295
+        y: 4
+        width: 15
         height: 22
       alignment: 9
-      pivot: {x: 0.52347445, y: 0.05086079}
+      pivot: {x: 0.5, y: 0.05086079}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -309,9 +309,9 @@ TextureImporter:
       name: aloy_runSidepng_7
       rect:
         serializedVersion: 2
-        x: 91
-        y: 0
-        width: 13
+        x: 344
+        y: 5
+        width: 15
         height: 22
       alignment: 7
       pivot: {x: 0.5, y: 0}

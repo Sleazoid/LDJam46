@@ -39,14 +39,14 @@ public class TrajectorySimulation : MonoBehaviour
 		if (playerFire.FacingRight)
         {
 			// The initial velocity
-			segVelocity = bowTransform.transform.right * playerFire.FireStrength * Time.deltaTime;
+			segVelocity = bowTransform.transform.right * (/*playerFire.FireStrength*/1000+95 )* Time.fixedDeltaTime;
 		}
         else
         {
-			segVelocity = -bowTransform.transform.right * playerFire.FireStrength * Time.deltaTime;
+			segVelocity = -bowTransform.transform.right * (/*playerFire.FireStrength*/1000 + 95) * Time.fixedDeltaTime;
 		}
-	
 
+		//Debug.Log(playerFire.FireStrength);
 		// reset our hit object
 		_hitObject = null;
 

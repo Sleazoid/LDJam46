@@ -31,6 +31,12 @@ public class WatcherEnemy : MonoBehaviour
     private bool playerIsDead = false;
     [SerializeField]
     private float distanceToDetect = 4;
+    private EnemyHealthBarScript healthBar;
+    public Transform headTransform;
+    private EnemySounds sounds;
+    [SerializeField]
+    private GameObject bodyColGO;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,21 +46,23 @@ public class WatcherEnemy : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         playerHealth = player.GetComponent<PlayerHealth>();
         runSpeed = runDefSpeed;
+        healthBar = GetComponent<EnemyHealthBarScript>();
+        healthBar.InitHealthBarValues(health);
+        sounds = GetComponent<EnemySounds>();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        
 
-
-    }
     private void OnDestroy()
     {
         CancelInvoke();
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(headTransform.position, 0.25f);
+    }
     void FixedUpdate()
     {
+      
        // Debug.Log(rb.position.x - lastPos.x);
 
         if (!playerIsDead)
@@ -71,9 +79,9 @@ public class WatcherEnemy : MonoBehaviour
                 CheckDirection();
                 anim.SetBool("Attack", true);
                 UpdateRunToPos();
+                sounds.PlayAttackSound();
                 attack = true;
                 runSpeed = runAttackSpeed;
-                // Invoke("GiveDamage", 0.2f);
             }
             else if (Vector2.Distance(this.transform.position, player.position) >= 2.3f && attack)
             {
@@ -88,16 +96,22 @@ public class WatcherEnemy : MonoBehaviour
                 GiveDamage();
             }
 
-            if (this.transform.position.x - runToPos.x < 0 && rend.flipX == true)
+            if (this.transform.position.x - runToPos.x < 0 && transform.localScale.x == 1)
             {
-                //rb.velocity = new Vector2(0, 0);
-                rend.flipX = false;
+                transform.localScale = new Vector3(-1f, 1f, 1f);
             }
-            if (this.transform.position.x - runToPos.x > 0 && rend.flipX == false)
+            if (this.transform.position.x - runToPos.x > 0 && transform.localScale.x == -1)
             {
-                rend.flipX = true;
-                //  rb.velocity = new Vector2(0, 0);
+                transform.localScale = new Vector3(1f, 1f, 1f);
             }
+            //if (this.transform.position.x - player.position.x < 0 && transform.localScale.x == -1)
+            //{
+            //    transform.localScale = new Vector3(1f, 1f, 1f);
+            //}
+            //else if (this.transform.position.x - player.position.x > 0 && transform.localScale.x == 1)
+            //{
+            //    transform.localScale = new Vector3(-1f, 1f, 1f);
+            //}
             Vector3 thisPos = transform.position;
             Vector3 position = Vector3.MoveTowards(rb.position, runToPos, runSpeed * Time.fixedDeltaTime);
             thisPos = new Vector2(position.x, thisPos.y);
@@ -144,13 +158,21 @@ public class WatcherEnemy : MonoBehaviour
     public void CheckDirection()
     {
 
-        if (this.transform.position.x - player.position.x < 0 && rend.flipX == true)
+        //if (this.transform.position.x - player.position.x < 0 && rend.flipX == true)
+        //{
+        //    rend.flipX = false;
+        //}
+        //else if (this.transform.position.x - player.position.x > 0 && rend.flipX == false)
+        //{
+        //    rend.flipX = true;
+        //}
+        if (this.transform.position.x - player.position.x < 0 && transform.localScale.x == 1)
         {
-            rend.flipX = false;
+            transform.localScale = new Vector3(-1f, 1f, 1f);
         }
-        else if (this.transform.position.x - player.position.x > 0 && rend.flipX == false)
+        else if (this.transform.position.x - player.position.x > 0 && transform.localScale.x == -1)
         {
-            rend.flipX = true;
+            transform.localScale = new Vector3(1f, 1f, 1f);
         }
     }
     IEnumerator EnableDamaging()
@@ -159,50 +181,51 @@ public class WatcherEnemy : MonoBehaviour
         canGiveDamage = true;
         if (Vector2.Distance(this.transform.position, player.position) <= 2.3f && attack) //TODO: ihan hirveää hotfix koodia, tee uusiksi kun on aikaa
         {
-
             attack = false;
         }
         yield return null;
     }
-    private void StartAttack()
-    {
-        anim.SetBool("PlayerDetected", true);
 
-    }
     private void UpdateRunToPos()
     {
         if (!attack)
         {
-            Vector3 dir = player.position - this.transform.position;
+            //Vector3 dir = player.position - this.transform.position;
             runToPos = player.position + ((player.position - this.transform.position).normalized * 5);
         }
 
-
     }
-    public void ArrowHit()
+    public void ArrowHit(Vector2 point)
     {
-        if (!dead)// && !playerNoticed)
+        if (!dead)
         {
+
             anim.Play("TakeDamage");
             playerNoticed = true;
             runToPos = player.position + ((player.position - this.transform.position).normalized * 2);
             InvokeRepeating("UpdateRunToPos", 0f, 1.5f);
-            // if()
-            health -= 10;
+            if(Vector2.Distance(point,headTransform.position)<0.25f)
+            {
+                health -= 1f;
+                healthBar.UpdateHealthBar();
+            }
+            health -= 1f;
+            healthBar.UpdateHealthBar();
+            sounds.PlayHurtSound();
             CheckHealth();
+          
         }
 
     }
     private void DetectPlayer()
     {
-        if (!dead)// && !playerNoticed)
+        if (!dead)
         {
             anim.Play("TakeDamage");
             playerNoticed = true;
             runToPos = player.position + ((player.position - this.transform.position).normalized * 5);
             InvokeRepeating("UpdateRunToPos", 0f, 1.5f);
-            // if()
-            health -= 0;
+            //health -= 0;
             CheckHealth();
         }
 
@@ -218,7 +241,12 @@ public class WatcherEnemy : MonoBehaviour
     }
     private void Death()
     {
+        healthBar.DisableHealthBar();
         anim.Play("ToDeath");
+        sounds.PlayDeathSound();
+        GameManager.Instance.EnemyDied();
+        bodyColGO.SetActive(false);
+        this.GetComponent<CapsuleCollider2D>().enabled=(false);
     }
     public void PlayerIsDead()
     {

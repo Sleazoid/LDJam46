@@ -9,7 +9,7 @@ public class BowAnimShootScript : MonoBehaviour
     // Start is called before the first frame update
     public void SendShootMessage()
     {
-        Debug.Log("ampu");
+   
         bowAim.ShootArrow();
     }
 }

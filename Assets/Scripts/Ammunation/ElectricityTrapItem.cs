@@ -6,6 +6,8 @@ using UnityEngine;
 public class ElectricityTrapItem : MonoBehaviour
 {
     [SerializeField]
+    private List<AudioClip> clips;
+    [SerializeField]
     private float dissapearTime = 5f;
     PlayerHealth playerHealth;
     // Start is called before the first frame update
@@ -13,6 +15,10 @@ public class ElectricityTrapItem : MonoBehaviour
     {
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         StartCoroutine("DestroyDelay");
+        int random = Random.Range(0, clips.Count);
+        AudioSource audio = this.GetComponent<AudioSource>();
+        audio.clip = clips[random];
+        audio.Play();
     }
     
     IEnumerator DestroyDelay()
@@ -24,10 +30,14 @@ public class ElectricityTrapItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player"))
+        if(GameManager.Instance.PlayerhasDied==false)
         {
-            playerHealth.ApplyDamage();
+            if (collision.gameObject.tag.Equals("Player"))
+            {
+                playerHealth.ApplyDamage();
 
+            }
         }
+        
     }
 }

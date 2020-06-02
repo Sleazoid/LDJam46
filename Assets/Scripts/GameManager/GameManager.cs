@@ -11,11 +11,21 @@ public class GameManager : MonoBehaviour
     private GameObject canvas;
     [SerializeField]
     private GameObject deadTextPanel;
+    [SerializeField]
+    private GameObject LevelClearPanel;
+    [SerializeField]
+    private GameObject healthUsePanel;
     private List<GameObject> watchers;
+    private List<GameObject> stormBirds;
+    private bool playerIsDead = false;
+    private int deadEnemiesCount = 0;
     private static GameManager instance;
+    private bool levelClearPointReached = false;
     [SerializeField]
     private Image healthImg;
     public static GameManager Instance { get => instance; }
+    public bool PlayerhasDied { get => playerIsDead; set => playerIsDead = value; }
+
     private int currentSceneIndex = 0;
     bool alreadyLoading = false;
     private void Awake()
@@ -38,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         watchers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Watcher"));
+        stormBirds = new List<GameObject>(GameObject.FindGameObjectsWithTag("Hawk"));
     }
     private void OnEnable()
     {
@@ -53,8 +64,13 @@ public class GameManager : MonoBehaviour
     {
         canvas.SetActive(true);
         deadTextPanel.SetActive(false);
+        LevelClearPanel.SetActive(false);
         watchers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Watcher"));
+        stormBirds = new List<GameObject>(GameObject.FindGameObjectsWithTag("Hawk"));
         alreadyLoading = false;
+        playerIsDead = false;
+        levelClearPointReached = false;
+        healthUsePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -71,7 +87,7 @@ public class GameManager : MonoBehaviour
                 ToMainMenu();
             }
         }
-       
+
     }
     private void ToMainMenu()
     {
@@ -84,16 +100,21 @@ public class GameManager : MonoBehaviour
     }
     public void ToNextLevel(float timeWait)
     {
-        if(!alreadyLoading)
+        if (!alreadyLoading)
         {
             Debug.Log("Next level wanted");
             StartCoroutine("LoadLevelWithWait", timeWait);
             alreadyLoading = true;
-        }   
+        }
     }
     IEnumerator LoadLevelWithWait(float val)
     {
+        int totalScenes = SceneManager.sceneCountInBuildSettings;
         currentSceneIndex++;
+        if (currentSceneIndex >= totalScenes)
+        {
+            currentSceneIndex = 0;
+        }
         yield return new WaitForSeconds(val);
         SceneManager.LoadScene(currentSceneIndex);
         yield return null;
@@ -101,24 +122,61 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerIsDead()
     {
+        playerIsDead = true;
         deadTextPanel.SetActive(true);
         healthImg.fillAmount = 0;
-        foreach(GameObject go in watchers)
+        foreach (GameObject go in watchers)
         {
             go.GetComponent<WatcherEnemy>().PlayerIsDead();
+        }
+        foreach (GameObject go in stormBirds)
+        {
+            go.GetComponent<StormBirdEnemy>().PlayerIsDead();
         }
     }
     private void RestartGame()
     {
-        Debug.Log("Restart");    
+        Debug.Log("Restart");
         Scene curScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(curScene.buildIndex);
     }
     public void DecreaseHealth(float value)
     {
-        Debug.Log(value);
+
         healthImg.fillAmount = value;
         Debug.Log(healthImg.fillAmount);
 
+    }
+    public void ActivateUseHealthPanel(bool value)
+    {
+        healthUsePanel.SetActive(value);
+    }
+    public void EnemyDied()
+    {
+        deadEnemiesCount++;
+        //Debug.Log(watchers.Count + stormBirds.Count);
+        //Debug.Log(deadEnemiesCount);
+        if (deadEnemiesCount >= watchers.Count + stormBirds.Count)
+        {
+            Debug.Log("Nice");
+            if (levelClearPointReached)
+            {
+                Debug.Log("Nice");
+                LevelClearPanel.SetActive(true);
+                GameObject.Find("CampFire").GetComponent<CampFireSave>().SetFireOn();
+            }
+        }
+
+    }
+    public void SavePointReached()
+    {
+        levelClearPointReached = true;
+
+        if (deadEnemiesCount >= watchers.Count + stormBirds.Count)
+        {
+            Debug.Log("Nice");
+            LevelClearPanel.SetActive(true);
+            GameObject.Find("CampFire").GetComponent<CampFireSave>().SetFireOn();
+        }
     }
 }

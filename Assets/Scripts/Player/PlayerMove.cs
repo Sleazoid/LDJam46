@@ -32,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private Transform groundCheck;
     bool canMove = true;
+    private LayerMask trapElectricityLayer;
     [SerializeField]
     private Transform bowTransform;
     private BowAim bowAim;
@@ -51,19 +52,34 @@ public class PlayerMove : MonoBehaviour
     private float rollDeadTime = 0.5f;
     private bool rollIsDead = false;
     DashTrail dashTrail;
-
+    private EnemySounds sounds;
     PlayerHealth playerHealth;
+    //public int playerLayer;
+    //private int ignoreOnRollLayer;
     private void Awake()
     {
         inputAction = new InputControls();
-        //inputAction.Gamepad.Jump.performed += ctx => Jump();
+
         inputAction.Gamepad.LeftStick.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         inputAction.Gamepad.Jump.performed += ctx => AddJumpPressForce();
         inputAction.Gamepad.Jump.canceled += ctx => JumpReleased();
         inputAction.Gamepad.Roll.performed += ctx => RollDodge();
-     
+        inputAction.Gamepad.Interaction.performed += ctx => InteractionPressed();
+        sounds = GetComponent<EnemySounds>();
+        trapElectricityLayer = 1 << LayerMask.NameToLayer("GroundTrap");
+        //playerLayer = ToLayerNumber(LayerMask.NameToLayer("Player"));
+        //ignoreOnRollLayer = LayerMask.GetMask("enemyBullet");
+       
     }
-
+    public static int ToLayerNumber(LayerMask mask)
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            if ((1 << i) == mask.value)
+                return i;
+        }
+        return -1;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -73,7 +89,10 @@ public class PlayerMove : MonoBehaviour
         dashTrail = GetComponentInChildren<DashTrail>();
         playerHealth = GetComponent<PlayerHealth>();
     }
-
+    private void InteractionPressed()
+    {
+        playerHealth.InteractionPressed();
+    }
     private void Update()
     {
         yMove = Input.GetAxis("Vertical");
@@ -83,13 +102,13 @@ public class PlayerMove : MonoBehaviour
         {
             if (xMove < 0f)
             {
-                transform.localScale = new Vector3(-1f, 1f, 1f); //bowTransform.localScale = new Vector3(-1f, 1f, 1f);
+                transform.localScale = new Vector3(-1f, 1f, 1f); 
                 facingRight = false;
                 bowAim.FacingRight = facingRight;
             }
             else if (xMove > 0f)
             {
-                transform.localScale = new Vector3(1f, 1f, 1f);// bowTransform.localScale = new Vector3(1f, 1f, 1f);
+                transform.localScale = new Vector3(1f, 1f, 1f);
                 facingRight = true;
                 bowAim.FacingRight = facingRight;
             }
@@ -97,15 +116,28 @@ public class PlayerMove : MonoBehaviour
         }
 
     }
+    private void OnDrawGizmos()
+    {
+        Vector2 pos = new Vector2(transform.position.x, transform.position.y - 0.3f);
+        Gizmos.DrawSphere(pos, 0.12f);
 
+    }
     public void RollEnded()
     {
+        Physics2D.IgnoreLayerCollision(10, 14, false);
         dashTrail.CancelInvoke("SpawnTrailPart");
         rolling = false;
         rb.velocity = new Vector2(0, rb.velocity.y);
         rollIsDead = true;
         Invoke("EnableRollAction", rollDeadTime);
         playerHealth.IsDodging = false;
+    
+        Vector2 pos = new Vector2(transform.position.x , transform.position.y - 0.3f);
+        if (Physics2D.CircleCast(pos, 0.12f,-transform.up,0.5f, trapElectricityLayer))
+        {
+            //Debug.Log("trap hurt");
+            playerHealth.ApplyDamage();
+        }
     }
     private void EnableRollAction()
     {
@@ -149,6 +181,9 @@ public class PlayerMove : MonoBehaviour
     {
         if (!rollIsDead && !rolling && IsGrounded)
         {
+            //Debug.Log(playerLayer + "  " + trapElectricityLayer);
+            //Debug.Log(playerLayer +"  " +ignoreOnRollLayer);
+            Physics2D.IgnoreLayerCollision(10, 14, true);
             rolling = true;
             playerHealth.IsDodging = true;
             anim.SetBool("Roll", true);
@@ -162,6 +197,7 @@ public class PlayerMove : MonoBehaviour
             rb.AddForce(dirForce, ForceMode2D.Impulse);
             dashTrail.InvokeRepeating("SpawnTrailPart", 0, 0.03f);
             dashTrail.FlipTrail();
+            sounds.PlayJumpSound();
         }
 
     }
@@ -177,7 +213,7 @@ public class PlayerMove : MonoBehaviour
         {
             anim.Play("aloyJump");
             InvokeRepeating("JumpCheckInterval", 0f, jumpCheckInterval);
-
+           
         }
 
     }
@@ -191,11 +227,11 @@ public class PlayerMove : MonoBehaviour
         if (curJumpInterval < jumpIntervalLimit)
         {
             rb.velocity = new Vector2(0, 0);
-            // Vector2 jumpDir = new Vector2(moveDir.x, this.transform.up.y);
+        
             Vector2 dirForce = this.transform.up * jumpCheckForce;// * moveDir ;
             rb.AddForce(dirForce, ForceMode2D.Impulse);
             curJumpInterval++;
-            Debug.Log(curJumpInterval);
+    
         }
 
     }
@@ -206,7 +242,11 @@ public class PlayerMove : MonoBehaviour
     }
     private void Move()
     {
-        rb.velocity = new Vector2(xMove * RunSpeed, rb.velocity.y);
+        if(!rolling)
+        {
+            rb.velocity = new Vector2(xMove * RunSpeed, rb.velocity.y);
+        }
+
     }
     private void OnEnable()
     {

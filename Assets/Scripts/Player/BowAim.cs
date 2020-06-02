@@ -33,7 +33,7 @@ public class BowAim : MonoBehaviour
     [SerializeField]
     float maxfireBtnValue = 500f;
 
-
+    private EnemySounds sounds;
 
     [SerializeField]
     private float fireStrength;
@@ -64,19 +64,21 @@ public class BowAim : MonoBehaviour
     void Start()
     {
         bowAnim = bowGO.GetComponent<Animator>();
-        
+        sounds = GetComponent<EnemySounds>();
         bowGO.SetActive(false);
         playerMove = GetComponent<PlayerMove>();
     }
 
-    // Update is called once per frame
-    void Update()
+  
+    public void PlayerDied()
     {
-
+        aiming = false;
+        playerAnim.SetBool("isAiming", aiming);
+        DisableBow();
     }
-
     private void CancelAim()
     {
+        trajectoryGO.SetActive(false);
         StartCoroutine("WaitTillCancelAim");
     }
     IEnumerator WaitTillCancelAim()
@@ -156,13 +158,13 @@ public class BowAim : MonoBehaviour
         Vector3[] positions = new Vector3[trajectoryGO.GetComponent<LineRenderer>().positionCount];// = trajectoryGO.GetComponent<LineRenderer>().
         trajectoryGO.GetComponent<LineRenderer>().GetPositions(positions);
         newArrow.GetComponent<ArrowScript>().SetPath(positions, fireStrength, facingRight);
-       
+        sounds.PlayAttackSound();
     }
     void Shoot()
     {
         bowAnim.SetBool("isFiring", true);
         trajectoryGO.SetActive(true);
-        //Debug.Log("sdfads");
+   
         InvokeRepeating("FireCheckInterval", 0f, fireCheckInterval);
     }
     //IEnumerator EnableShooting()

@@ -19,8 +19,10 @@ public class ArrowScript : MonoBehaviour
     private bool hitSomething = false;
     [SerializeField]
     private GameObject sparklePrefab;
+    private Transform playerTransform;
     private void Awake()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
         //rb.gravityScale = 
     }
@@ -53,12 +55,17 @@ public class ArrowScript : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-        else if(transform.position.y<-50)
-        {
+        //else if(Vector2.Distance(playerTransform.position,this.transform.position)>13)
+        //{
           
-            Destroy(this.gameObject);
-        }
-       
+        //    Destroy(this.gameObject);
+        //}
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+
+        if (pos.x < 0.0) Destroy(this.gameObject); ;
+        if (1.0 < pos.x) Destroy(this.gameObject);
+        if (pos.y < 0.0) Destroy(this.gameObject);
+        if (1.0 < pos.y) Destroy(this.gameObject);
     }
 
     public void SetPath(Vector3[] points, float force, bool facingRight)
@@ -82,7 +89,7 @@ public class ArrowScript : MonoBehaviour
         if (collision.gameObject.tag.Equals("Watcher"))
         {
             rb.velocity = new Vector2(0, 0);
-            collision.gameObject.GetComponent<WatcherEnemy>().ArrowHit();
+            collision.gameObject.GetComponent<WatcherEnemy>().ArrowHit(collision.contacts[0].point);
             GameObject sp = Instantiate(sparklePrefab, collision.contacts[0].point, Quaternion.identity);
             Destroy(this.gameObject);
         }
