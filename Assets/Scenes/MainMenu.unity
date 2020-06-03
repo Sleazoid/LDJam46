@@ -1904,6 +1904,7 @@ MonoBehaviour:
   deadTextPanel: {fileID: 626256927}
   LevelClearPanel: {fileID: 0}
   healthUsePanel: {fileID: 0}
+  HpPanel: {fileID: 0}
   healthImg: {fileID: 537511465}
 --- !u!4 &762313078
 Transform:
@@ -4667,11 +4668,31 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4384049437133846581, guid: 4a71d53e96b83b8498c595b01ae18849,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.98039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384049437133846581, guid: 4a71d53e96b83b8498c595b01ae18849,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.41568628
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384049437133846581, guid: 4a71d53e96b83b8498c595b01ae18849,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.039215688
+      objectReference: {fileID: 0}
     - target: {fileID: 4384049437358098280, guid: 4a71d53e96b83b8498c595b01ae18849,
         type: 3}
       propertyPath: m_Name
       value: GameManager (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4384049437358098281, guid: 4a71d53e96b83b8498c595b01ae18849,
+        type: 3}
+      propertyPath: HpPanel
+      value: 
+      objectReference: {fileID: 1815321200}
     - target: {fileID: 4384049437358098282, guid: 4a71d53e96b83b8498c595b01ae18849,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4727,8 +4748,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4384049437831734520, guid: 4a71d53e96b83b8498c595b01ae18849,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384049437831734520, guid: 4a71d53e96b83b8498c595b01ae18849,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384049437831734520, guid: 4a71d53e96b83b8498c595b01ae18849,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a71d53e96b83b8498c595b01ae18849, type: 3}
+--- !u!1 &1815321200 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4384049437117124234, guid: 4a71d53e96b83b8498c595b01ae18849,
+    type: 3}
+  m_PrefabInstance: {fileID: 1815321199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1911530735
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class StormBirdEnemy : MonoBehaviour
     private bool moveSideways = true;
     SpriteRenderer sprite;
     private bool dead = false;
-    private bool playerNoticed = false;
+    public bool playerNoticed = false;
     Rigidbody2D rb;
     private GameObject playerGO;
     private PlayerHealth playerHealth;
@@ -82,11 +82,12 @@ public class StormBirdEnemy : MonoBehaviour
             this.transform.position = new Vector2(startPos.x + sidewayValue - xLoopPos,
       startPos.y + Mathf.Sin(Time.time * yLoopSpeed) * yLoopPos);
 
-            if(debugPosition)
-            {
-                //Debug.Log("sidewayval: "+sidewayValue);
-                //Debug.Log("to Value: " + startPos.x + xLoopPos);
-            }
+            //if(debugPosition)
+            //{
+            //    Debug.Log("aaaasdg");
+            //    //Debug.Log("sidewayval: "+sidewayValue);
+            //    //Debug.Log("to Value: " + startPos.x + xLoopPos);
+            //}
 
         }
         if (!playerNoticed && !isDying)

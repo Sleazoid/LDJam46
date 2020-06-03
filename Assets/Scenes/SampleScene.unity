@@ -6318,6 +6318,11 @@ PrefabInstance:
       propertyPath: xLoopPos
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 3489209638883680877, guid: 79eee666252637a448dff91645c372bd,
+        type: 3}
+      propertyPath: debugPosition
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79eee666252637a448dff91645c372bd, type: 3}
 --- !u!1001 &4384049437670178332

@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     private bool levelClearPointReached = false;
     [SerializeField]
+    private GameObject HpPanel;
+    [SerializeField]
     private Image healthImg;
     public static GameManager Instance { get => instance; }
     public bool PlayerhasDied { get => playerIsDead; set => playerIsDead = value; }
@@ -62,6 +64,14 @@ public class GameManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            HpPanel.SetActive(false);
+        }
+        else
+        {
+            HpPanel.SetActive(true);
+        }
         canvas.SetActive(true);
         deadTextPanel.SetActive(false);
         LevelClearPanel.SetActive(false);
