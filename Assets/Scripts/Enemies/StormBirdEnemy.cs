@@ -45,6 +45,7 @@ public class StormBirdEnemy : MonoBehaviour
     private Vector2 flyToPos;
     private bool isDying = false;
     private float detectedStartRelativePosX = 0;
+    public bool debugPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +59,7 @@ public class StormBirdEnemy : MonoBehaviour
         healthBar = GetComponent<EnemyHealthBarScript>();
         healthBar.InitHealthBarValues(health);
         sounds = GetComponent<EnemySounds>();
+        
     }
 
     // Update is called once per frame
@@ -66,8 +68,9 @@ public class StormBirdEnemy : MonoBehaviour
        // Debug.DrawRay(this.transform.position, this.transform.right,Color.green,1f);
         if (moveSideways && !playerNoticed)
         {
-            float sidewayValue = Mathf.PingPong(Time.time * loopSpeed, startPos.x + xLoopPos);
-            if (sidewayValue > startPos.x + xLoopPos - 0.1f && this.transform.localScale.x != 1)
+            
+            float sidewayValue = Mathf.PingPong(Time.time * loopSpeed,  xLoopPos);
+            if (sidewayValue > xLoopPos - 0.1f && this.transform.localScale.x != 1)
             {
                 transform.localScale = new Vector3(1f, 1f, 1f);
             }
@@ -79,7 +82,11 @@ public class StormBirdEnemy : MonoBehaviour
             this.transform.position = new Vector2(startPos.x + sidewayValue - xLoopPos,
       startPos.y + Mathf.Sin(Time.time * yLoopSpeed) * yLoopPos);
 
-
+            if(debugPosition)
+            {
+                //Debug.Log("sidewayval: "+sidewayValue);
+                //Debug.Log("to Value: " + startPos.x + xLoopPos);
+            }
 
         }
         if (!playerNoticed && !isDying)
