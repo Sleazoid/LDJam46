@@ -24,12 +24,21 @@ public class TrajectorySimulation : MonoBehaviour
 	{
 		simulatePath();
 	}
+    private void OnEnable()
+    {
+		sightLine.enabled = true;
 
-	/// <summary>
-	/// Simulate the path of a launched ball.
-	/// Slight errors are inherent in the numerical method used.
-	/// </summary>
-	void simulatePath()
+	}
+    private void OnDisable()
+    {
+		sightLine.positionCount = 0;
+		sightLine.enabled = false;
+	}
+    /// <summary>
+    /// Simulate the path of a launched ball.
+    /// Slight errors are inherent in the numerical method used.
+    /// </summary>
+    void simulatePath()
 	{
 		Vector3[] segments = new Vector3[segmentCount];
 

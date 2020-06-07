@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Next level wanted");
             SceneManager.LoadScene(0);
             alreadyLoading = true;
+            currentSceneIndex = 0;
         }
     }
     public void ToNextLevel(float timeWait)

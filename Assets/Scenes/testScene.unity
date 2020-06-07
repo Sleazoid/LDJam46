@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -460,7 +460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321033517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.43, y: -0.65, z: 0}
+  m_LocalPosition: {x: -14.17, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1668729916}
@@ -730,7 +730,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341460707}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.62, y: 1.58, z: -10}
+  m_LocalPosition: {x: -14.36, y: 1.58, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1238759392}
@@ -1095,7 +1095,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.62, y: 1.58, z: -10}
+  m_LocalPosition: {x: -14.36, y: 1.58, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1759060917}
@@ -4244,10 +4244,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e36a2e7ef3bd2244f96795f380f8346e, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5937,7 +5937,7 @@ PrefabInstance:
     - target: {fileID: 724810126851051004, guid: 2a23bf9962350684d820eb2cad8ccc16,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -697.18
+      value: -717.56
       objectReference: {fileID: 0}
     - target: {fileID: 724810126851051004, guid: 2a23bf9962350684d820eb2cad8ccc16,
         type: 3}
@@ -6241,7 +6241,7 @@ PrefabInstance:
     - target: {fileID: 3489209638883680872, guid: 79eee666252637a448dff91645c372bd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.06
+      value: 17.01
       objectReference: {fileID: 0}
     - target: {fileID: 3489209638883680872, guid: 79eee666252637a448dff91645c372bd,
         type: 3}
@@ -6418,7 +6418,7 @@ PrefabInstance:
     - target: {fileID: 5508639002874502498, guid: 84605de363eb9bc4ba73d0cc1301c906,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.17
+      value: -1.85
       objectReference: {fileID: 0}
     - target: {fileID: 5508639002874502498, guid: 84605de363eb9bc4ba73d0cc1301c906,
         type: 3}

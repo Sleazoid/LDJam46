@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void ApplyDamage()
     {
-        if(!isDodging)
+        if(!isDodging && !isDead)
         {
             anim.Play("aloy_DamageAnim");
             health--;

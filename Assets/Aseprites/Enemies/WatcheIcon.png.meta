@@ -1,13 +1,7 @@
 fileFormatVersion: 2
-guid: f5c8045d691282c4ebf7e4a5d369207d
+guid: 9c411bfc04ae43e4cb2a35d7925f26a2
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -7419314824770155444
-    second: attackRecover_0
-  - first:
-      213: 9216273082484849828
-    second: attackRecover_1
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -46,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -139,49 +133,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: attackRecover_0
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 2
-        width: 68
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c4c09c0e97c490990800000000000000
-      internalID: -7419314824770155444
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackRecover_1
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 0
-        width: 65
-        height: 34
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4acf082e987c6ef70800000000000000
-      internalID: 9216273082484849828
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
